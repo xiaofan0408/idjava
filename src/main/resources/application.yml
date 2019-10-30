@@ -1,0 +1,23 @@
+server:
+  port: 9011
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${spring.datasource.dbip}:${spring.datasource.dbport}/${spring.datasource.dbname}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    dbip: 118.25.217.97
+    dbport: 3306
+    dbname: idjava
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 100
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: UserHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  jpa:
+    show-sql: true
