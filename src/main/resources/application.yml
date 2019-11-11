@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${spring.datasource.dbip}:${spring.datasource.dbport}/${spring.datasource.dbname}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-    dbip: 118.25.217.97
+    dbip: mysql
     dbport: 3306
     dbname: idjava
     username: root

@@ -24,7 +24,7 @@ public class IdJavaController {
 
     @ApiOperation("get")
     @GetMapping("/get")
-    public Mono<Result> get(@RequestParam("key") String key) throws Exception {
+    public Mono<Long> get(@RequestParam("key") String key) throws Exception {
         return apiService.get(key);
     }
 

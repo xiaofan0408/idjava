@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * @author xuzefan  2019/10/30 14:31
@@ -52,27 +53,46 @@ public class ApiServiceImpl implements ApiService{
     }
 
     @Override
-    public Mono<Result> get(String key) throws Exception {
-        return Mono.create(new Consumer<MonoSink<Result>>() {
+    public Mono<Long> get(String key) throws Exception {
+//        return Mono.create(new Consumer<MonoSink<Long>>() {
+//            @Override
+//            public void accept(MonoSink<Long> resultMonoSink) {
+//                try {
+//                    if (StringUtils.isEmpty(key)) {
+//                        resultMonoSink.success(null);
+//                    }
+//                    MySQLIdGenerator idGenerator = idGeneratorMap.get(key);
+//                    if (idGenerator == null) {
+//                        resultMonoSink.success(null);
+//                    }
+//                    Long id = idGenerator.next();
+//                    resultMonoSink.success(id);
+//                }catch (Exception e){
+//                    resultMonoSink.error(e);
+//                }
+//            }
+//        }).publishOn(Schedulers.elastic());
+
+        return Mono.defer(new Supplier<Mono<? extends Long>>() {
             @Override
-            public void accept(MonoSink<Result> resultMonoSink) {
-                try {
-                    if (StringUtils.isEmpty(key)) {
-                        resultMonoSink.success(ResultGenerator.genFailResult("invalid key"));
-                    }
-                    MySQLIdGenerator idGenerator = idGeneratorMap.get(key);
-                    if (idGenerator == null) {
-                        resultMonoSink.success(ResultGenerator.genSuccessResult());
-                    }
-                    Long id = idGenerator.next();
-                    resultMonoSink.success(ResultGenerator.genSuccessResult(id.toString()));
-                }catch (Exception e){
-                    resultMonoSink.error(e);
+            public Mono<? extends Long> get() {
+                if (StringUtils.isEmpty(key)) {
+                       return null;
                 }
+                MySQLIdGenerator idGenerator = idGeneratorMap.get(key);
+                if (idGenerator == null) {
+                   return null;
+                }
+                Long id = null;
+                try {
+                    id = idGenerator.next();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return Mono.just(id);
+
             }
         }).publishOn(Schedulers.elastic());
-
-
     }
 
     @Override

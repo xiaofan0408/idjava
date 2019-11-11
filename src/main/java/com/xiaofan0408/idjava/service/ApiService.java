@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
  * @author xuzefan  2019/10/30 14:31
  */
 public interface ApiService {
-    Mono<Result> get(String key) throws Exception;
+    Mono<Long> get(String key) throws Exception;
 
     Mono<Result> set(String idGenKey,Long idValue) throws Exception;
 
