@@ -54,25 +54,6 @@ public class ApiServiceImpl implements ApiService{
 
     @Override
     public Mono<Long> get(String key) throws Exception {
-//        return Mono.create(new Consumer<MonoSink<Long>>() {
-//            @Override
-//            public void accept(MonoSink<Long> resultMonoSink) {
-//                try {
-//                    if (StringUtils.isEmpty(key)) {
-//                        resultMonoSink.success(null);
-//                    }
-//                    MySQLIdGenerator idGenerator = idGeneratorMap.get(key);
-//                    if (idGenerator == null) {
-//                        resultMonoSink.success(null);
-//                    }
-//                    Long id = idGenerator.next();
-//                    resultMonoSink.success(id);
-//                }catch (Exception e){
-//                    resultMonoSink.error(e);
-//                }
-//            }
-//        }).publishOn(Schedulers.elastic());
-
         return Mono.defer(new Supplier<Mono<? extends Long>>() {
             @Override
             public Mono<? extends Long> get() {
